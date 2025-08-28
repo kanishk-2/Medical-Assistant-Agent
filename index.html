@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Hospital Symptom Checker Assistant</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="p-4">
+
+    <div class="container">
+        <div class="card">
+            <div class="flex items-center justify-center mb-4 text-blue-600">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-16 h-16 mr-4 text-blue-600">
+                  <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z" clip-rule="evenodd" />
+                </svg>
+                <h1 class="text-3xl font-bold text-gray-800">
+                    <span class="text-blue-600">Your Hospital</span>
+                    <br>Symptom Checker Assistant
+                </h1>
+            </div>
+            <p class="text-gray-500 mb-6 text-center">
+                Please enter your symptom below to get a preliminary medical assessment.
+            </p>
+
+            <div class="flex flex-col md:flex-row items-center gap-4 mb-6">
+                <input type="text" id="symptom-input" placeholder="e.g., I have a fever and a cough" class="input-field flex-grow text-gray-700">
+                <button id="submit-button" class="main-button w-full md:w-auto">Check Symptom</button>
+            </div>
+
+            <div id="result-area" class="mt-8">
+                <div id="loading" class="hidden flex justify-center items-center">
+                    <div class="loading-spinner"></div>
+                    <span class="ml-3 text-gray-500 font-medium">Checking symptoms...</span>
+                </div>
+                <div id="response" class="hidden content-area">
+                    <p class="text-lg font-semibold text-gray-700 mb-2">Diagnosis:</p>
+                    <p id="response-text" class="text-xl text-gray-800 font-medium"></p>
+                </div>
+                <div id="llm-features-section" class="hidden mt-8 space-y-4 md:flex md:space-y-0 md:space-x-4">
+                    <button id="get-treatment-button" class="secondary-button flex-1 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-2">
+                          <path fill-rule="evenodd" d="M7.5 5.25a6 6 0 0 0-5.79 3.565A11.96 11.96 0 0 0 1.5 12c0 .993.167 1.965.455 2.865A6 6 0 0 0 7.5 18.75h9a6 6 0 0 0 5.79-3.565A11.96 11.96 0 0 0 22.5 12c0-.993-.167-1.965-.455-2.865A6 6 0 0 0 16.5 5.25h-9ZM7.5 7.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9ZM16.5 7.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9Z" clip-rule="evenodd" />
+                        </svg>
+                        Get Next Steps
+                    </button>
+                    <button id="get-causes-button" class="info-button flex-1 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 mr-2">
+                          <path d="M11.25 4.507A4.507 4.507 0 0 0 10.5 8.25v2.25H8.25a.75.75 0 0 0-.75.75v3.75a.75.75 0 0 0 .75.75h2.25v2.25a4.507 4.507 0 0 0 3.75.75v-2.25h2.25a.75.75 0 0 0 .75-.75V11.25a.75.75 0 0 0-.75-.75h-2.25V8.25a4.507 4.507 0 0 0-.75-3.75Z" />
+                          <path d="M9 9a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5A.75.75 0 0 1 9 9ZM12.75 12.75a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5h-1.5a.75.75 0 0 1-.75-.75ZM15 9a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5A.75.75 0 0 1 15 9ZM9 15a.75.75 0 0 1 .75.75v1.5a.75.75 0 0 1-1.5 0v-1.5A.75.75 0 0 1 9 15ZM12.75 15a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5h-1.5a.75.75 0 0 1-.75-.75ZM18.75 12a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5h-1.5a.75.75 0 0 1-.75-.75ZM12 4.5a.75.75 0 0 1 .75-.75h1.5a.75.75 0 0 1 0 1.5h-1.5a.75.75 0 0 1-.75-.75Z" />
+                        </svg>
+                        What are the possible causes?
+                    </button>
+                </div>
+
+                <div id="llm-response-container" class="mt-4">
+                    <div id="llm-loading" class="hidden flex justify-center items-center">
+                        <div class="loading-spinner"></div>
+                        <span class="ml-3 text-gray-500 font-medium">Generating information...</span>
+                    </div>
+                    <div id="treatment-suggestions" class="hidden content-area">
+                        </div>
+                    <div id="causes-info" class="hidden content-area">
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
