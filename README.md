@@ -74,9 +74,9 @@ Contributions are welcome!
 
 ## Outputs-
 
-### output-1:
+### output img:
 
-### output-2:
+<img width="1302" height="642" alt="output-1" src="https://github.com/user-attachments/assets/cc98be15-ac6e-4171-81a8-a21cd8e1637f" />
 
 ---
 
